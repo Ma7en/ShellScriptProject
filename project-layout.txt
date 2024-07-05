@@ -107,7 +107,8 @@ Notes =>
                     b- no  => Error :- Folder name is wrong => اسم الفولدر غلط او الفولدر غير موجود 
                     a- yes => use => rm -r name_folder  => هتمسح ال DB 
 
-
+and 
+backup 
 
 
 
@@ -116,7 +117,7 @@ Notes =>
     |
     use => read -p "Enter name:- " contact
         | 
-        Check   
+        Check => 
         | 
         => &;: => special letters 
         =>     => Spaces 
