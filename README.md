@@ -2,12 +2,12 @@
 
     - Shell Script Project
 
-# Project managers
+# Project managers:-
 
     - Mazen Abdeltawab Saad
     - Sosanna Emad Atta
 
-# Github
+# Github:-
 
     - Starting:-
         - git init
@@ -19,3 +19,5 @@
 
     - Branch:-
         - git branch proj
+        - git checkout proj
+        - git push -u origin proj

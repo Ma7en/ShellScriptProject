@@ -1,0 +1,368 @@
+
+================================================================
+
+
+DB      | 
+tables  | 
+Columns | 
+Data    | 
+
+
+================================================================
+
+DB    => Folder 
+
+Table => دا الملف ال هيكون جواه البيانات وهيكون ياما 
+1 - File data - File metadata
+2 - File data + metadata
+
+Notes => 
+1- Path (relative path) 
+2- في فولدر ال DB 
+    - الاساسي 
+    - ال هيكون جواه فولدرات مش فايل 
+
+
+
+================================================================
+
+Storage => 
+الملف هيعمل تنفيذ في المكان ال اشتغل فيه 
+
+
+
+================================================================
+
+FileProject.sh 
+    |
+    Run File => الملف لما يشتغل هيعمل تحقق 
+    |
+    check Database => هل الفولدر موجود ولا لا 
+        | 
+        1- yes  => cd Folder DB => الفولدر موجود اذا هتدخل جواء الفولدر 
+        2- no   => create => mkdir DB => cd DB => الفولدر مش موجود اذا تنشاء الفولدر وبعدين تدخل جواه 
+        |
+        cd => DB 
+            |
+            show menu => select 
+            1- Create DB 
+            2- List DB 
+            3- Contact DB  
+            4- Delete - Drop DB 
+
+
+
+| => جواء الملف لما يشتغل 
+1- Create DB 
+    |
+    use => read -p "Enter name:- " create
+            | 
+        Check   => فحص علي الاسم هل يحتوي علي التالي ولا لا 
+            | 
+            => &;: => special letters 
+            =>     => Spaces 
+            => 
+            |
+            a- yes => Rewrite the name => الاسم فيه الحاجات ال فوق اكتبوا تاني 
+            b- no  => الاسم مفهوش الحاجات ال فوق دي 
+                | 
+                Check   => فحص علي الاسم هل موجود قبل كدا ولا لا 
+                |
+                a- yes  => Error => the name already exists 
+                b- no   => create DB - folder => use ./ 
+
+
+
+
+
+
+2- List DB => 
+    |
+    use => ls -F | grep |
+
+Notes => 
+1- جوا ال DB
+الاساسية هيكون فيه فولدرات مش ملفات 
+
+
+
+
+
+
+3- Remote - Delete DB 
+    |
+    use read input => read -p "Enter name:- " remote
+        | 
+        Check => فحص الاسم التي تم ادخاله هل يحتوي علي التالي
+            | 
+            => &;: => special letters 
+            =>     => Spaces 
+            => 
+            |
+            a- no   => Error :- Rewrite the name   => الاسم مش تمام فيه الحاجات ال فوق دي اكتبوا تاني 
+            b- yes  => الاسم تمام 
+                | 
+                Check => الفولدر موجود ولا لا 
+                |
+                    b- no  => Error :- Folder name is wrong => اسم الفولدر غلط او الفولدر غير موجود 
+                    a- yes => use => rm -r name_folder  => هتمسح ال DB 
+
+
+
+
+
+
+4- Contact DB 
+    |
+    use => read -p "Enter name:- " contact
+        | 
+        Check   
+        | 
+        => &;: => special letters 
+        =>     => Spaces 
+        => 
+        |
+        a- yes  => Rewrite the name => الاسم فيه الحاجات ال فوق اكتب تاني 
+        b- no   => الاسم تمام 
+            | 
+            Check =>  الفولدر موجود ولا لا 
+                |
+                a- no  => Folder name is wrong => اسم الفولدر غلط او الفولدر مش موجود
+                b- yes => use => if [ -d name_folder ]  => cd name_folder 
+                |
+                menu => select   => file 
+                1- Create tables => 
+                    use => read -p "Enter name:- " create
+                        |
+                        Check => الاسم مفهوش التالي 
+                        | 
+                        => &;: => special letters 
+                        =>     => Spaces 
+                        => 
+                        |
+                        a- yes => Rewrite the name => الاسم فيه الحاجات دي  اكتبوا تاني 
+                        b- no  => الاسم مفهوش الحاجات دي 
+                            | 
+                            Check   => فحص علي الاسم هل موجود ولا لا 
+                            | 
+                            a- yes  => Error => the name already exists 
+                            b- no   => create table - file =>  
+                    
+                    use => read -p "enter number of felds:- " felds
+                        | 
+                        EX :- 3 
+                        |
+                        Loop on the number
+                        |
+                        Columns  
+                        |
+                        - id      => PK(Primary key) + int 
+                        - name    => string 
+                        - age     => int 
+                        - address => string 
+                        |
+                        id   | Name      | age    | address 
+                        1    | Mazen     | 23     | Fayoum
+                        2    | saad      | 24     | Fayoum
+                        3    | Maraim    | 25     | Fayoum
+                        |
+                        Storage 
+                        |
+                        Ex:- student 
+                        |
+                        1 => First method of storage 
+                            - File metadata => student_metadate   => id   | Name      | age    | address 
+                            - File data     => student            => 1    | Mazen     | 23     | Fayoum
+                        
+                        2 => Second method of storage
+                            - File data + metadata 
+                                - id   | Name      | age    | address 
+                                - 1    | Mazen     | 23     | Fayoum
+
+                2- List tables   => use => ls 
+
+                3- Drop - Delete table    => use => input rm => 
+
+                4- Insrt table   => 
+                    |
+                    loop 
+                    |
+                    - id      => PK(Primary key) + int + unquie 
+                    - name    => string 
+                    - age     => int 
+                    - address => string 
+                    |
+                    - id   | Name      | age    | address 
+                    |
+                    - 1:Mazen:23:Fayoum
+
+                
+                5- select From Table => 
+                    |
+                    show menu => select 
+                        -1a- all          => 
+                            one file =- use => cat file 
+                            two file =- 3 - $d -> file date 
+                                        - sed  -n 3, $dp filedate 
+
+                        -2a- Bcolumn => show row -- 
+                            | 
+                            show menu => select
+                                use => read -p "Enter number columns:- " nubmerC
+                                |
+                                1- id
+                                2- Name
+                                3- age
+                                4- address 
+                                |
+                                Check => اختار من الارقام ال فوق دي ولا لا 
+                                    |
+                                    a- no  => Rewrite the name => الرقم مش موجود 
+                                    b- yes => الرقم تمام 
+                                        |
+                                        loop on the number of columns
+                                        |
+                                        Ex:- 1- id 
+                                        |
+                                        use => read -p "Enter number id:- " nubmerId
+                                            | 
+                                            Check => فحص هل رقم الايدي يحتوي علي التالي ولا لا 
+                                                |  
+                                                    => &;: => special letters 
+                                                    =>     => Spaces 
+                                                    => 
+                                                    |
+                                                    a- yes => Rewrite the id => الايدي فيه الحاجات ال فوق اكتبوا تاني 
+                                                    b- no  => الايدي مفهوش الحاجات ال فوق دي 
+                                                        | 
+                                                        Check   => فحص علي الايدي هل موجود ولا لا 
+                                                        |
+                                                        b- no   => Error =>  Rewrite the id => الايدي مش موجود 
+                                                        a- yes  => show row  => selection 
+                                                                                | 
+                                                                                select * from table 
+                                                                                where id = 1
+
+                        -3a- columns => show column | |
+                            use => read -p "Enter number columns:- " nubmerC
+                                |
+                                1- id
+                                2- Name
+                                3- age
+                                4- address 
+                                |
+                                Check => اختار من الارقام ال فوق دي ولا لا 
+                                    |
+                                    a- no  => Error => Rewrite the name => الرقم مش موجود 
+                                    b- yes => الرقم تمام 
+                                        |
+                                        loop on the number of columns
+                                        |
+                                        show all the column => projection  
+                                                                | 
+                                                                select Id from table 
+
+                6- Delete From Table => 
+                    |
+                    show menu => select 
+                        -1a- all          => Delete all data 
+                        -2a- Delete by    => 
+                            |
+                            show menu => select
+                                use => read -p "Enter number columns:- " nubmerC
+                                |
+                                1- id
+                                2- Name
+                                3- age
+                                4- address 
+                                |
+                                Check => اختار من الارقام ال فوق دي ولا لا 
+                                    |
+                                    a- no  => Error => Rewrite the name => الرقم مش موجود 
+                                    b- yes => الرقم تمام 
+                                        |
+                                        loop on the number of columns
+                                        |
+                                        Ex:- 1- id = 1
+                                        |
+                                        use => read -p "Enter number id:- " nubmerId
+                                            | 
+                                            Check => هل يحتوي علي التالي ولا لا 
+                                                |  
+                                                    => &;: => special letters 
+                                                    =>     => Spaces 
+                                                    => 
+                                                    |
+                                                    a- yes => Rewrite the id => الايدي فيه الحاجات ال فوق اكتبوا تاني 
+                                                    b- no  => الايدي مفهوش الحاجات ال فوق دي 
+                                                        | 
+                                                        Check   => فحص علي الايدي هل موجود ولا لا 
+                                                        |
+                                                        b- no   => Error =>  Rewrite the id => الايدي مش موجود 
+                                                        a- yes  => Delete row  => selection 
+                                                                                | 
+                                                                                select * from table 
+                                                                                where id = 1
+
+                7- update From Table =>
+                    |
+                    show menu => select
+                        use => read -p "Enter number columns:- " nubmerC
+                        |
+                        1- id
+                        2- Name
+                        3- age
+                        4- address 
+                        |
+                        Check => اختار من الارقام ال فوق دي ولا لا 
+                            |
+                            a- no  => Error => Rewrite the name => الرقم مش موجود 
+                            b- yes => الرقم تمام 
+                                |
+                                loop on the number of columns
+                                |
+                                Ex:- 1- id = 1
+                                |
+                                use => read -p "Enter number id:- " nubmerId
+                                    | 
+                                    Check => هل يحتوي علي التالي ولا لا 
+                                        |  
+                                            => &;: => special letters 
+                                            =>     => Spaces 
+                                            => 
+                                            |
+                                            a- yes => Rewrite the id => الايدي فيه الحاجات ال فوق اكتبوا تاني 
+                                            b- no  => الايدي مفهوش الحاجات ال فوق دي 
+                                                | 
+                                                Check   => فحص علي الايدي هل موجود ولا لا 
+                                                |
+                                                b- no   => Error =>  Rewrite the id => الايدي مش موجود 
+                                                a- yes  => update row  => selection 
+                                                                        | 
+                                                                        select * from table 
+                                                                        where id = 1
+                                                                        |
+                                                                        EX:- age = 30 
+                                                                            age = 40
+                                                                            => use => awk => id = 3 => age = 40 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
