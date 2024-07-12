@@ -225,3 +225,4 @@ disconnect() {
 
 # Start the application
 main_menu
+
