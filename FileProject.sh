@@ -1,5 +1,7 @@
 #! /usr/bin/bash
 shopt -s extglob
+
+# When running the file, check the database folder exists or not.
 if [ ! -d "./DB" ]
 then
     echo "Database directory does not exist. Creating..."
@@ -7,6 +9,7 @@ then
 fi
 cd DB
 echo "Access DB folder"
+
 # Main menu 
 main_menu() {
     while true
@@ -74,8 +77,10 @@ create_database() {
         echo "Database ($db_name) created."
     fi
 }
+
 # 2 = list DB 
 list_databases() {
+    echo "Database:- "
     ls -d */
 }
 
@@ -104,7 +109,6 @@ drop_database() {
 }
 
 # 3 = Contact DB
-
 connect_to_database() {
     read -p "Enter database name: " db_name
 
@@ -183,5 +187,41 @@ database_menu() {
                 ;;
         esac
     done
+}
 
-    # Start the application
+# 1. Create table
+
+
+# 2. List tables
+list_tables() {
+    # ls -p | grep -v /
+    echo "Tables:- "
+    ls -F | grep -v /
+}
+
+# 3. Drop Table
+
+
+# 4. Insert into Table
+
+
+# 5. Select From Table
+
+
+# 6. Delete From Table
+
+
+# 7. Update Table
+
+
+# 8. Disconnect
+disconnect() {
+    cd ..
+    main_menu
+}
+
+
+
+
+# Start the application
+main_menu
