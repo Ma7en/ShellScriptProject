@@ -49,6 +49,7 @@ FileProject.sh
             2- List DB 
             3- Contact DB  
             4- Delete - Drop DB 
+            5- exit DB 
 
 
 
@@ -131,8 +132,21 @@ backup
                 a- no  => Folder name is wrong => اسم الفولدر غلط او الفولدر مش موجود
                 b- yes => use => if [ -d name_folder ]  => cd name_folder 
                 |
-                menu => select   => file 
-                1- Create tables => 
+                menu tables => select   => file 
+                |=> 
+                    1. Create tables
+                    2. List tables 
+                    3. Drop - Delete table
+                    4. Insrt table 
+                    5. select From Table
+                    6. Delete From Table
+                    7. update From Table
+                    8. Disconnect
+
+
+                
+                1. Create tables => 
+                    |
                     use => read -p "Enter name:- " create
                         |
                         Check => الاسم مفهوش التالي 
@@ -180,11 +194,11 @@ backup
                                 - id   | Name      | age    | address 
                                 - 1    | Mazen     | 23     | Fayoum
 
-                2- List tables   => use => ls 
+                2. List tables   => use => ls -F | grep -v /
 
-                3- Drop - Delete table    => use => input rm => 
+                3. Drop - Delete table  => user => input => rm => rm name_file or rm name_file name.meta
 
-                4- Insrt table   => 
+                4. Insrt table   => 
                     |
                     loop 
                     |
@@ -196,11 +210,11 @@ backup
                     - id   | Name      | age    | address 
                     |
                     - 1:Mazen:23:Fayoum
-
-                
-                5- select From Table => 
+             
+                5. select From Table => 
                     |
                     show menu => select 
+                        |
                         -1a- all          => 
                             one file =- use => cat file 
                             two file =- 3 - $d -> file date 
@@ -263,13 +277,15 @@ backup
                                                                 | 
                                                                 select Id from table 
 
-                6- Delete From Table => 
+                6. Delete From Table => 
                     |
                     show menu => select 
+                        |
                         -1a- all          => Delete all data 
                         -2a- Delete by    => 
                             |
                             show menu => select
+                                |
                                 use => read -p "Enter number columns:- " nubmerC
                                 |
                                 1- id
@@ -305,9 +321,10 @@ backup
                                                                                 select * from table 
                                                                                 where id = 1
 
-                7- update From Table =>
+                7. update From Table =>
                     |
                     show menu => select
+                        |
                         use => read -p "Enter number columns:- " nubmerC
                         |
                         1- id
