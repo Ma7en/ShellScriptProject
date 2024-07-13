@@ -10,6 +10,7 @@ fi
 cd DB
 echo "Access DB folder"
 
+
 # Main menu 
 main_menu() {
     while true
@@ -54,6 +55,7 @@ main_menu() {
 
 }
 
+
 # 1 = create a new database
 create_database() {
     read -p "Enter database name:- " db_name
@@ -78,11 +80,13 @@ create_database() {
     fi
 }
 
+
 # 2 = list DB 
 list_databases() {
     echo "Database:- "
     ls -d */
 }
+
 
 # 4 = drop database
 drop_database() {
@@ -107,6 +111,7 @@ drop_database() {
         echo "Database does not exist."
     fi
 }
+
 
 # 3 = Contact DB
 connect_to_database() {
@@ -189,7 +194,51 @@ database_menu() {
     done
 }
 
+
 # 1. Create table
+create_table() {
+    read -p "Enter table name:- " table_name
+
+    if [[ "$table_name" =~ [[:space:][:punct:]] ]]
+    then
+        echo "Invalid name. No spaces or special characters allowed."
+        return
+    fi
+
+    if [[ -z "$table_name" ]]
+    then
+        echo "Invalid name. Please enter a valid name."
+        return
+    fi
+
+    if [ -f "$table_name" ]
+    then
+        echo "Table already exists."
+    else
+        touch "$table_name"
+
+        read -p "Enter number of fields:- " num_columns
+        echo Please enter the ID field in the first box.
+
+        declare -A fields
+        header=""
+        
+        for (( i=1; i<=num_columns; i++ ))
+        do
+            read -p "Enter field $i name:- " col_name
+            read -p "Enter field $i type (int/string):- " col_type
+            fields[$col_name]=$col_type
+            header+="$col_name($col_type):"
+
+        done
+
+        header=${header::-1}
+
+        echo "$header" > "${table_name}.meta"
+
+        echo "Table ($table_name) created."
+    fi
+}
 
 
 # 2. List tables
@@ -199,7 +248,31 @@ list_tables() {
     ls -F | grep -v /
 }
 
+
 # 3. Drop Table
+drop_table() {
+    read -p "Enter table name:- " table_name
+
+    if [[ "$table_name" =~ [[:space:][:punct:]] ]]
+    then
+        echo "Invalid name. No spaces or special characters allowed."
+        return
+    fi
+
+    if [[ -z "$table_name" ]]
+    then
+        echo "Invalid name. Please enter a valid name."
+        return
+    fi
+
+    if [ -f "$table_name" ]
+    then
+        rm "$table_name" "${table_name}.meta"
+        echo "Table ($table_name) deleted."
+    else
+        echo "Table does not exist."
+    fi
+}
 
 
 # 4. Insert into Table
