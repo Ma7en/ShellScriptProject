@@ -273,6 +273,9 @@ drop_table() {
         echo "Table does not exist."
     fi
 }
+
+
+#4. Inser into Table
 insert_into_table() {
     list_tables_not_meta
 
@@ -324,6 +327,121 @@ insert_into_table() {
 
 # 5. Select From Table
 
+
+
+select_from_table() {
+    
+    read -p "Enter table name:- " table_name
+    
+    if [[ "$table_name" =~ [[:space:][:punct:]] ]]
+    then
+        echo "Invalid name. No spaces or special characters allowed."
+        return
+    fi
+
+    if [[ -z "$table_name" ]]
+    then
+        echo "Invalid name. Please enter a valid name."
+        return
+    fi
+
+
+    if [ -f "$table_name" ]
+    then
+        echo "Select an option:- "
+        echo "1. Select all"
+        echo "2. Select by column"
+        echo "3. Select by id"
+        
+        read -p "Enter choice:- " choice
+
+        case $choice in
+            1) 
+                cat "$table_name.meta"
+                cat "$table_name"
+                ;;
+            
+            2)
+                select_by_column "$table_name" 
+                ;;
+
+            3)
+                select_by_id "$table_name" 
+                ;;
+
+            *) 
+                echo "Invalid choice" 
+                ;;
+        esac
+
+    else
+        echo "Table does not exist."
+        return
+    fi
+
+
+}
+select_by_column() {
+    meta_file="$table_name.meta"
+    data_file="$table_name"
+
+    IFS=':' read -r -a columns < "$meta_file"
+
+    echo "Select a column to display (select a number):- "
+    for i in "${!columns[@]}"
+    do
+        echo "$(($i + 1)). ${columns[$i]}"
+    done
+
+    read -p "Enter choice: " choice
+    choice=$((choice - 1))
+
+    if [ $choice -ge 0 ] && [ $choice -lt ${#columns[@]} ]
+    then
+        column_name=${columns[$choice]}
+        echo "Selected column: $column_name"
+
+        awk -v col=$((choice + 1)) -F':' '
+        {
+            print $col
+        }
+        ' "$data_file"
+    else
+        echo "Invalid choice."
+    fi
+}
+select_by_id() {
+    data_file="$table_name"
+
+    mapfile -t data < "$data_file"
+
+    echo "Available IDs:- "
+    for i in "${!data[@]}"
+    do
+        IFS=':' read -r -a fields <<< "${data[$i]}"
+        echo "ID: ${fields[0]}"
+    done
+
+    read -p "Enter ID choice: " choice_id
+
+    found=false
+
+    for i in "${!data[@]}"
+    do
+        IFS=':' read -r -a fields <<< "${data[$i]}"
+        if [ "${fields[0]}" == "$choice_id" ]
+        then
+            echo "Selected data: ${data[$i]}"
+            found=true
+            break
+        fi
+    done
+
+    if [ "$found" = false ]
+    then
+        echo "ID not found."
+    fi
+}
 
 # 6. Delete From Table
 
