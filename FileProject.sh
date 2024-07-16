@@ -273,9 +273,53 @@ drop_table() {
         echo "Table does not exist."
     fi
 }
+insert_into_table() {
+    list_tables_not_meta
+
+    read -p "Enter table name:- " table_name
+
+    if [[ "$table_name" =~ [[:space:][:punct:]] ]]
+    then
+        echo "Invalid name. No spaces or special characters allowed."
+        return
+    fi
+
+    if [[ -z "$table_name" ]]
+    then
+        echo "Invalid name. Please enter a valid name."
+        return
+    fi
+
+    if [[ -f "$table_name.meta" && -f "$table_name" ]]
+    then
+        columns=$(cat "$table_name.meta")
+        echo "Columns: $columns"
+        cat "$table_name"
+        
+        IFS=':' read -r -a col_array <<< "$columns"
+        entry=""
+        
+        for col in "${col_array[@]}"
+        do
+            IFS=':' read -r -a col_def <<< "$col"
+            
+            read -p "Enter ${col_def[0]}:- " value
+
+            entry+="$value:"
+        done
+
+        entry=${entry%:}
+        echo "$entry" >> "$table_name"
+        echo "Inserted into '$table_name'."
+        
+    else
+        echo "Table ($table_name) not found."
+    fi
 
 
-# 4. Insert into Table
+}
+
+
 
 
 # 5. Select From Table
